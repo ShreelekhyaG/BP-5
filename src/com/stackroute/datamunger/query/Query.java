@@ -1,5 +1,10 @@
 package com.stackroute.datamunger.query;
 
+import com.stackroute.datamunger.query.parser.QueryParameter;
+import com.stackroute.datamunger.query.parser.QueryParser;
+import com.stackroute.datamunger.reader.CsvQueryProcessor;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Query {
@@ -14,14 +19,16 @@ public class Query {
 	 * multiple conditions
 	 */
 	@SuppressWarnings("rawtypes")
-	public HashMap executeQuery(String queryString) {
+	public HashMap executeQuery(String queryString)  {
 	
 		/* instantiate QueryParser class */
-		
+		QueryParser queryParser=new QueryParser();
 		/*
 		 * call parseQuery() method of the class by passing the queryString which will
 		 * return object of QueryParameter
 		 */
+		QueryParameter queryParameter=new QueryParameter();
+		queryParameter=queryParser.parseQuery(queryString);
 		
 		
 		/*
@@ -37,10 +44,15 @@ public class Query {
 		 * QueryParameter Object to it. This method is supposed to return resultSet
 		 * which is a HashMap
 		 */
-		
-		
-	
-		return null;
+		CsvQueryProcessor csvQueryProcessor=new CsvQueryProcessor();
+		DataSet dataSet=null;
+		try {
+			dataSet = csvQueryProcessor.getResultSet(queryParameter);
+		}
+		catch (IOException e){
+			e.printStackTrace();
+		}
+		return dataSet;
 	}
 
 }

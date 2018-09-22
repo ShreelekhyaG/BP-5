@@ -9,5 +9,12 @@ public class Header extends HashMap<String, Integer> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String[] headers;
+	public void setHeaders(String[] headers1){
+		headers=headers1;
+	}
+	public String[] getHeaders() {
+		return headers;
+	}
 	
 }
